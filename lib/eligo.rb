@@ -1,5 +1,7 @@
-require "eligo/version"
+require 'eligo/version'
 
 module Eligo
-  # Your code goes here...
+  VERSION = "0.0.1"
+
+  class Engine < Rails::Engine
 end
