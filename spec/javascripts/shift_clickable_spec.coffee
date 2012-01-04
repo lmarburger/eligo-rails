@@ -25,14 +25,23 @@ describe 'shiftClickable()', ->
     expect(second).toBeChecked()
     expect(third) .toBeChecked()
 
-  it 'sets the default anchor above the first checkbox', ->
+  it 'checks checkboxes below the shift-clicked checkbox', ->
+    $(':checkbox').shiftClickable()
+    third.trigger 'click'
+    first.trigger shiftClickEvent
+
+    expect(first) .toBeChecked()
+    expect(second).toBeChecked()
+    expect(third) .toBeChecked()
+
+  it 'sets a default anchor', ->
     $(':checkbox').shiftClickable()
     second.trigger shiftClickEvent
 
     expect(first) .toBeChecked()
     expect(second).toBeChecked()
 
-  it 'does not check checkboxes above the anchor', ->
+  it 'does not check checkboxes above the selected group', ->
     $(':checkbox').shiftClickable()
     second.trigger 'click'
     third .trigger shiftClickEvent
@@ -41,11 +50,22 @@ describe 'shiftClickable()', ->
     expect(third) .toBeChecked()
     expect(first) .not.toBeChecked()
 
-  it 'does not check checkboxes below the anchor', ->
+  it 'does not check checkboxes below the selected group', ->
     $(':checkbox').shiftClickable()
     first .trigger 'click'
     second.trigger shiftClickEvent
 
     expect(first) .toBeChecked()
     expect(second).toBeChecked()
+    expect(third) .not.toBeChecked()
+
+  it 'unchecks checkboxes between last and shift-clicked checkboxes', ->
+    $(':checkbox').shiftClickable()
+
+    group = [ third, second, first ]
+    checkbox.trigger 'click' for checkbox in group
+    third.trigger shiftClickEvent
+
+    expect(first) .not.toBeChecked()
+    expect(second).not.toBeChecked()
     expect(third) .not.toBeChecked()
