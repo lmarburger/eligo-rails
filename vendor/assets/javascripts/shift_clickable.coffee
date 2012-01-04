@@ -8,13 +8,16 @@ $.fn.shiftClickable = ->
   checkboxes
     .click (e) ->
       clicked = $ this
+      newAnchorIndex = clicked.index() - 1
 
       if e.shiftKey
-        [ first, last ] = [ anchorIndex, clicked.index() - 1 ]
+        [ first, last ] = [ anchorIndex, newAnchorIndex ]
 
         checkboxes
           .slice(first, last)
           .prop('checked', true)
+
+      anchorIndex = newAnchorIndex
 
 # $ ->
 
