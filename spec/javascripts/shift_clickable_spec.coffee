@@ -9,7 +9,7 @@ describe 'shiftClickable()', ->
   body = null
   beforeEach -> body = $ 'body'
 
-  it 'selects the first drops when shift clicking', ->
+  it 'selects the first checkbox when shift clicking', ->
     first  = $(checkboxHtml).appendTo(body)
     last   = $(checkboxHtml).appendTo(body)
 
