@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   ## the sub! line in the Rakefile
   s.name              = 'eligo'
   s.version           = '0.0.1'
-  s.date              = '2012-01-03'
+  s.date              = '2012-01-04'
 
   ## Make sure your summary is short. The description may be as long
   ## as you like.
@@ -53,9 +53,15 @@ Gem::Specification.new do |s|
   # = MANIFEST =
   s.files = %w[
     Gemfile
+    Gemfile.lock
     Rakefile
     eligo.gemspec
     lib/eligo.rb
+    spec/javascripts/shift_clickable_spec.coffee
+    spec/javascripts/support/jasmine.yml
+    spec/javascripts/support/jasmine_config.rb
+    spec/javascripts/support/jasmine_runner.rb
+    vendor/assets/javascripts/shift_clickable.coffee
   ]
   # = MANIFEST =
 
