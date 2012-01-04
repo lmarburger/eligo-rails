@@ -4,17 +4,18 @@
 #= require jasmine-sinon
 
 describe 'shiftClickable()', ->
-  checkboxHtml = '<input type="checkbox">'
-  shiftClickEvent = jQuery.Event 'click', shiftKey: true
+
   body = null
   beforeEach -> body = $ 'body'
 
-  it 'selects the first checkbox when shift clicking', ->
-    first  = $(checkboxHtml).appendTo(body)
-    last   = $(checkboxHtml).appendTo(body)
+  shiftClickEvent = jQuery.Event 'click', shiftKey: true
+  createCheckbox  = => $('<input type="checkbox">').appendTo(body)
+
+  it 'sets the default anchor above the first checkbox', ->
+    first = createCheckbox()
+    last  = createCheckbox()
 
     $(':checkbox').shiftClickable()
-    spyOnEvent first, 'change'
     last.trigger shiftClickEvent
 
     expect(first).toBeChecked()
