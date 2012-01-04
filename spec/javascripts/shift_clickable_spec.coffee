@@ -5,19 +5,21 @@
 
 describe 'shiftClickable()', ->
 
+  list = first = second = third = null
   shiftClickEvent = jQuery.Event 'click', shiftKey: true
-  createCheckbox  = -> $('<input type="checkbox">').appendTo(body)
+  createCheckbox  = ->
+    $('<input type="checkbox">').appendTo(
+      $('<li/>').appendTo(list))
 
-  body = first = second = third = null
-  afterEach  -> body.find(':checkbox').remove()
+  afterEach  -> list.remove()
   beforeEach ->
-    body   = $ 'body'
+    list   = $ '<ul/>'
     first  = createCheckbox()
     second = createCheckbox()
     third  = createCheckbox()
+    list.shiftClickable()
 
   it 'checks checkboxes between last and shift-clicked checkboxes', ->
-    $(':checkbox').shiftClickable()
     first.trigger 'click'
     third.trigger shiftClickEvent
 

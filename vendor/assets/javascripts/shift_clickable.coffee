@@ -2,21 +2,22 @@
 
 $ = jQuery
 $.fn.shiftClickable = ->
-  checkboxes  = $ this
-  anchorIndex = 1
+  items = $(this).children('li')
+  anchorIndex = 0
 
-  checkboxes
+  items.find(':checkbox')
     .click (e) ->
-      clicked = $ this
+      clicked = $(this).closest('li')
       newAnchorIndex = clicked.index()
 
       if e.shiftKey
         [ first, last ] = [ anchorIndex, newAnchorIndex ]
         [ first, last ] = [ last, first ] if first > last
 
-        checkboxes
-          .slice(first - 1, last - 1)
+        items
+          .slice(first, last + 1)
           .not(clicked)
-          .prop('checked', !clicked.prop('checked'))
+          .find(':checkbox')
+          .prop('checked', !clicked.find(':checkbox').prop('checked'))
 
       anchorIndex = newAnchorIndex
