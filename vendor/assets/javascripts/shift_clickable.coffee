@@ -2,11 +2,12 @@
 
 $ = jQuery
 $.fn.shiftClickable = ->
-  list  = $ this
-  anchorIndex = 0
+  list   = $ this
+  anchor = null
+  anchorIndex = -> anchor?.index() ? 0
 
-  shiftClick = (clicked, clickedIndex) ->
-    [ first, last ] = [ anchorIndex, clickedIndex ]
+  shiftClick = (clicked) ->
+    [ first, last ] = [ anchorIndex(), clicked.index() ]
     [ first, last ] = [ last, first ] if first > last
 
     list.children('li')
@@ -17,13 +18,12 @@ $.fn.shiftClickable = ->
 
   list.click (e) ->
     clicked = $(e.target).closest('li')
-    clickedIndex = clicked.index()
 
     # It seems WebKit triggers `change` before `click`, but I'm not too
     # confident that all browsers must trigger events in exactly the same way.
     # Defer setting the value to be sure the checkbox has its new value.
     window.setTimeout(
       ->
-        shiftClick clicked, clickedIndex if e.shiftKey
-        anchorIndex = clickedIndex
+        shiftClick clicked if e.shiftKey
+        anchor = clicked
       1)

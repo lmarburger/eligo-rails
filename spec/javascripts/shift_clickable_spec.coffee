@@ -109,3 +109,20 @@ describe 'shiftClickable()', ->
       expect(third)     .toBeChecked()
       expect(firstLate) .toBeChecked()
       expect(secondLate).toBeChecked()
+
+  it 'adjusts anchor to account for inserted checkboxes', ->
+    firstLate  = createCheckbox()
+    secondLate = createCheckbox()
+
+    second.trigger 'click'
+    deferExpect ->
+      firstLate.add(secondLate).closest('li')
+        .insertBefore(second.closest('li'))
+
+      first.trigger shiftClickEvent()
+
+    deferExpect ->
+      expect(first)     .toBeChecked()
+      expect(firstLate) .toBeChecked()
+      expect(secondLate).toBeChecked()
+      expect(second)    .toBeChecked()
