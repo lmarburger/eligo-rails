@@ -48,6 +48,16 @@ describe 'shiftClickable()', ->
       expect(second).toBeChecked()
       expect(third) .toBeChecked()
 
+  it 'triggers the change event on checkboxes', ->
+    first.trigger 'click'
+    spyOnEvent second, 'change'
+    third.trigger shiftClickEvent()
+
+    deferExpect ->
+      expect('change').toHaveBeenTriggeredOn(first)
+      expect('change').toHaveBeenTriggeredOn(second)
+      expect('change').toHaveBeenTriggeredOn(third)
+
   it 'checks checkboxes below the shift-clicked checkbox', ->
     third.trigger 'click'
     first.trigger shiftClickEvent()

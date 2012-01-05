@@ -16,6 +16,7 @@ $.fn.shiftClickable = ->
       .not(clicked)
       .find(':checkbox')
       .prop('checked', checked)
+      .change()
 
   list.click (e) ->
     clicked = $(e.target).closest('li')
