@@ -1,6 +1,8 @@
 module Eligo
-  VERSION = "0.0.1"
+  module Rails
+    VERSION = "0.0.1"
 
-  class Engine < Rails::Engine
+    class Engine < ::Rails::Engine
+    end
   end
 end
