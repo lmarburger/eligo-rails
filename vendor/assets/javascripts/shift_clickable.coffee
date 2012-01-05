@@ -5,21 +5,27 @@ $.fn.shiftClickable = ->
   list   = $ this
   anchor = null
   anchorIndex = -> anchor?.index() ? 0
+  checkboxSelector = 'input[type=checkbox]'
 
   shiftClick = (clicked) ->
     [ first, last ] = [ anchorIndex(), clicked.index() ]
     [ first, last ] = [ last, first ] if first > last
 
-    checked = clicked.find(':checkbox').prop('checked')
+    checked = clicked.find(checkboxSelector).prop('checked')
     list.children('li')
       .slice(first, last + 1)
       .not(clicked)
-      .find(':checkbox')
+      .find(checkboxSelector)
       .prop('checked', checked)
       .change()
 
   list.click (e) ->
-    clicked = $(e.target).closest('li')
+    clicked = $ e.target
+    if clicked.is 'li'
+      clicked.find(checkboxSelector)
+        .trigger $.Event('click', shiftKey: e.shiftKey)
+    else
+      clicked = clicked.closest 'li'
 
     # It seems WebKit triggers `change` before `click`, but I'm not too
     # confident that all browsers must trigger events in exactly the same way.

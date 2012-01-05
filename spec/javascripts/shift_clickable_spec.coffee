@@ -48,6 +48,21 @@ describe 'shiftClickable()', ->
       expect(second).toBeChecked()
       expect(third) .toBeChecked()
 
+  it 'checks checkboxes when clicking parent list item', ->
+    first.closest('li').trigger 'click'
+
+    deferExpect ->
+      expect(first) .toBeChecked()
+
+  it 'checks checkboxes when shift-clicking parent list item', ->
+    first.trigger 'click'
+    third.closest('li').trigger shiftClickEvent()
+
+    deferExpect ->
+      expect(first) .toBeChecked()
+      expect(second).toBeChecked()
+      expect(third) .toBeChecked()
+
   it 'triggers the change event on checkboxes', ->
     first.trigger 'click'
     spyOnEvent second, 'change'
