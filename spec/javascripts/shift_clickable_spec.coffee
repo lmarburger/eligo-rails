@@ -26,6 +26,10 @@ describe 'shiftClickable()', ->
       .appendTo($('<li/>').appendTo(list))
 
 
+  it 'is chainable', ->
+    shiftClickedList = list.shiftClickable()
+    expect(shiftClickedList).toEqual(list)
+
   it 'simply checks checkboxes', ->
     first.trigger 'click'
     third.trigger 'click'
