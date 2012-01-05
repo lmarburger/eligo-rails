@@ -10,11 +10,12 @@ $.fn.shiftClickable = ->
     [ first, last ] = [ anchorIndex(), clicked.index() ]
     [ first, last ] = [ last, first ] if first > last
 
+    checked = clicked.find(':checkbox').prop('checked')
     list.children('li')
       .slice(first, last + 1)
       .not(clicked)
       .find(':checkbox')
-      .prop('checked', clicked.find(':checkbox').prop('checked'))
+      .prop('checked', checked)
 
   list.click (e) ->
     clicked = $(e.target).closest('li')
