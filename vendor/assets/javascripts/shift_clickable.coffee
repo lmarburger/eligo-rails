@@ -3,14 +3,13 @@
 $ = jQuery
 $.fn.shiftClickable = ->
   list  = $ this
-  items = list.children('li')
   anchorIndex = 0
 
   shiftClick = (clicked, clickedIndex) ->
     [ first, last ] = [ anchorIndex, clickedIndex ]
     [ first, last ] = [ last, first ] if first > last
 
-    items
+    list.children('li')
       .slice(first, last + 1)
       .not(clicked)
       .find(':checkbox')

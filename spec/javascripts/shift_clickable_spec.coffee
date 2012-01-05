@@ -97,3 +97,15 @@ describe 'shiftClickable()', ->
       expect(second).toBeChecked()
       expect(third) .toBeChecked()
       expect(late)  .toBeChecked()
+
+  it 'checks checkboxes added later', ->
+    firstLate  = createCheckbox()
+    secondLate = createCheckbox()
+    second    .trigger 'click'
+    secondLate.trigger shiftClickEvent()
+
+    deferExpect ->
+      expect(second)    .toBeChecked()
+      expect(third)     .toBeChecked()
+      expect(firstLate) .toBeChecked()
+      expect(secondLate).toBeChecked()
