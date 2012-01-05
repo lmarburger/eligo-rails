@@ -88,7 +88,7 @@ describe 'shiftClickable()', ->
       expect(second).not.toBeChecked()
       expect(third) .not.toBeChecked()
 
-  it 'handles shift-clicks on checkboxes added later', ->
+  it 'handles shift-clicks on appended checkboxes', ->
     late = createCheckbox()
     second.trigger 'click'
     late  .trigger shiftClickEvent()
@@ -98,7 +98,7 @@ describe 'shiftClickable()', ->
       expect(third) .toBeChecked()
       expect(late)  .toBeChecked()
 
-  it 'checks checkboxes added later', ->
+  it 'checks appended checkboxes', ->
     firstLate  = createCheckbox()
     secondLate = createCheckbox()
     second    .trigger 'click'
