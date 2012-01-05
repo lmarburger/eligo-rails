@@ -9,19 +9,21 @@ describe 'shiftClickable()', ->
     waits 1
     runs expectation
 
-  list = first = second = third = null
+  list = checkID = first = second = third = null
   afterEach  -> list.remove()
   beforeEach ->
-    list   = $ '<ul/>'
-    first  = createCheckbox()
-    second = createCheckbox()
-    third  = createCheckbox()
+    list    = $ '<ul/>'
+    checkID = 1
+    first   = createCheckbox()
+    second  = createCheckbox()
+    third   = createCheckbox()
     list.shiftClickable()
 
   shiftClickEvent = -> jQuery.Event 'click', shiftKey: true
   createCheckbox  = ->
-    $('<input type="checkbox">').appendTo(
-      $('<li/>').appendTo(list))
+    $('<input type="checkbox">')
+      .attr('id', checkID++)
+      .appendTo($('<li/>').appendTo(list))
 
 
   it 'simply checks checkboxes', ->
