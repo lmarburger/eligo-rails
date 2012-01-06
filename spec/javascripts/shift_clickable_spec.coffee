@@ -25,7 +25,6 @@ describe 'shiftClickable()', ->
       .attr('id', checkID++)
       .appendTo($('<li/>').appendTo(list))
 
-  it 'should fail to test travis ci', -> expect(true).toBe(false)
 
   it 'is chainable', ->
     shiftClickedList = list.shiftClickable()
