@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    eligo (0.0.1)
+    eligo-rails (0.0.3)
       jquery-rails (~> 1.0)
       railties (~> 3.1.0)
 
@@ -79,6 +79,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  eligo!
+  eligo-rails!
   jasmine-headless-webkit (~> 0.8.4)
   jasmine-spec-extras (~> 0.0.2)
