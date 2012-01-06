@@ -45,15 +45,17 @@ end
 
 
 begin
-  require 'jasmine'
-  load 'jasmine/tasks/jasmine.rake'
+  require 'jasmine-headless-webkit'
+  Jasmine::Headless::Task.new
 rescue LoadError
-  task :jasmine do
-    abort "Jasmine is not available. In order to run jasmine, you must: (sudo) gem install jasmine"
+  task :jasmine-headless do
+    abort "jasmine-headless-webkit is not available. In order to run, you must: (sudo) gem install jasmine-headless-webkit"
   end
 end
 
-task :default => :jasmine
+task :default => 'jasmine:headless'
+
+
 
 #############################################################################
 #
