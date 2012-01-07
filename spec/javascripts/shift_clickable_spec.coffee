@@ -19,7 +19,10 @@ describe 'shiftClickable()', ->
     third   = createCheckbox()
     list.shiftClickable()
 
-  shiftClickEvent = -> jQuery.Event 'click', shiftKey: true
+  shiftEvent = (event) ->
+    event or= 'click'
+    jQuery.Event event, shiftKey: true
+
   createCheckbox  = ->
     $('<input type="checkbox">')
       .attr('id', checkID++)
@@ -41,7 +44,7 @@ describe 'shiftClickable()', ->
 
   it 'checks checkboxes between last and shift-clicked checkboxes', ->
     first.trigger 'click'
-    third.trigger shiftClickEvent()
+    third.trigger shiftEvent()
 
     deferExpect ->
       expect(first) .toBeChecked()
@@ -56,7 +59,7 @@ describe 'shiftClickable()', ->
 
   it 'checks checkboxes when shift-clicking parent list item', ->
     first.trigger 'click'
-    third.closest('li').trigger shiftClickEvent()
+    third.closest('li').trigger shiftEvent()
 
     deferExpect ->
       expect(first) .toBeChecked()
@@ -66,7 +69,7 @@ describe 'shiftClickable()', ->
   it 'triggers the change event on checkboxes', ->
     first.trigger 'click'
     spyOnEvent second, 'change'
-    third.trigger shiftClickEvent()
+    third.trigger shiftEvent()
 
     deferExpect ->
       expect('change').toHaveBeenTriggeredOn(first)
@@ -75,7 +78,7 @@ describe 'shiftClickable()', ->
 
   it 'checks checkboxes below the shift-clicked checkbox', ->
     third.trigger 'click'
-    first.trigger shiftClickEvent()
+    first.trigger shiftEvent()
 
     deferExpect ->
       expect(first) .toBeChecked()
@@ -83,7 +86,7 @@ describe 'shiftClickable()', ->
       expect(third) .toBeChecked()
 
   it 'sets a default anchor', ->
-    second.trigger shiftClickEvent()
+    second.trigger shiftEvent()
 
     deferExpect ->
       expect(first) .toBeChecked()
@@ -91,7 +94,7 @@ describe 'shiftClickable()', ->
 
   it 'does not check checkboxes above the selected group', ->
     second.trigger 'click'
-    third .trigger shiftClickEvent()
+    third .trigger shiftEvent()
 
     deferExpect ->
       expect(second).toBeChecked()
@@ -100,7 +103,7 @@ describe 'shiftClickable()', ->
 
   it 'does not check checkboxes below the selected group', ->
     first .trigger 'click'
-    second.trigger shiftClickEvent()
+    second.trigger shiftEvent()
 
     deferExpect ->
       expect(first) .toBeChecked()
@@ -110,7 +113,7 @@ describe 'shiftClickable()', ->
   it 'unchecks checkboxes between last and shift-clicked checkboxes', ->
     group = [ third, second, first ]
     checkbox.trigger 'click' for checkbox in group
-    third.trigger shiftClickEvent()
+    third.trigger shiftEvent()
 
     deferExpect ->
       expect(first) .not.toBeChecked()
@@ -120,7 +123,7 @@ describe 'shiftClickable()', ->
   it 'handles shift-clicks on appended checkboxes', ->
     late = createCheckbox()
     second.trigger 'click'
-    late  .trigger shiftClickEvent()
+    late  .trigger shiftEvent()
 
     deferExpect ->
       expect(second).toBeChecked()
@@ -131,7 +134,7 @@ describe 'shiftClickable()', ->
     firstLate  = createCheckbox()
     secondLate = createCheckbox()
     second    .trigger 'click'
-    secondLate.trigger shiftClickEvent()
+    secondLate.trigger shiftEvent()
 
     deferExpect ->
       expect(second)    .toBeChecked()
@@ -148,7 +151,7 @@ describe 'shiftClickable()', ->
       firstLate.add(secondLate).closest('li')
         .insertBefore(second.closest('li'))
 
-      first.trigger shiftClickEvent()
+      first.trigger shiftEvent()
 
     deferExpect ->
       expect(first)     .toBeChecked()
@@ -172,7 +175,7 @@ describe 'shiftClickable()', ->
       removeMock.verify()
 
     it 'prevents selecting text when shift-clicking a list item', ->
-      first.trigger jQuery.Event 'mousedown', shiftKey: true
+      first.trigger shiftEvent 'mousedown'
 
     it 'does nothing when clicking an item', ->
       emptyMock .never()
