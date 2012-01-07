@@ -155,3 +155,26 @@ describe 'shiftClickable()', ->
       expect(firstLate) .toBeChecked()
       expect(secondLate).toBeChecked()
       expect(second)    .toBeChecked()
+
+
+  describe 'text selection', ->
+    emptyMock = removeMock = null
+
+    beforeEach ->
+      selectionStub = sinon.stub()
+      emptyMock  = selectionStub.empty           = sinon.mock()
+      removeMock = selectionStub.removeAllRanges = sinon.mock()
+      sinon.stub(window, 'getSelection').returns(selectionStub)
+
+    afterEach ->
+      window.getSelection.restore()
+      emptyMock .verify()
+      removeMock.verify()
+
+    it 'prevents selecting text when shift-clicking a list item', ->
+      first.trigger jQuery.Event 'mousedown', shiftKey: true
+
+    it 'does nothing when clicking an item', ->
+      emptyMock .never()
+      removeMock.never()
+      first.trigger 'mousedown'

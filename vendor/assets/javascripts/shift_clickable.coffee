@@ -19,19 +19,25 @@ $.fn.shiftClickable = ->
       .prop('checked', checked)
       .change()
 
-  list.click (e) ->
-    clicked = $ e.target
-    if clicked.is 'li'
-      clicked.find(checkboxSelector)
-        .trigger $.Event('click', shiftKey: e.shiftKey)
-    else
-      clicked = clicked.closest 'li'
+  list
+    .mousedown (e) ->
+      return unless e.shiftKey
+      window.getSelection?().empty?()
+      window.getSelection?().removeAllRanges?()
 
-    # It seems WebKit triggers `change` before `click`, but I'm not too
-    # confident that all browsers must trigger events in exactly the same way.
-    # Defer setting the value to be sure the checkbox has its new value.
-    window.setTimeout(
-      ->
-        shiftClick clicked if e.shiftKey
-        anchor = clicked
-      1)
+    .click (e) ->
+      clicked = $ e.target
+      if clicked.is 'li'
+        clicked.find(checkboxSelector)
+          .trigger $.Event('click', shiftKey: e.shiftKey)
+      else
+        clicked = clicked.closest 'li'
+
+      # It seems WebKit triggers `change` before `click`, but I'm not too
+      # confident that all browsers must trigger events in exactly the same way.
+      # Defer setting the value to be sure the checkbox has its new value.
+      window.setTimeout(
+        ->
+          shiftClick clicked if e.shiftKey
+          anchor = clicked
+        1)
